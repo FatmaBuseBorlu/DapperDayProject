@@ -2,11 +2,12 @@
 using DapperDayProject.Context;
 using DapperDayProject.Dtos.CustomerDtos;
 using DapperDayProject.Repositories.Abstract;
+using UpdateCustomerDto = DapperDayProject.Dtos.CustomerDtos.UpdateCustomerDto;
 
 namespace DapperDayProject.Repositories.Concrete
 {
-   
-    public class CustomerService : IcustomerService
+
+    public class CustomerService : ICustomerService
     {
         private readonly DapperContext _context;
         public CustomerService(DapperContext context)
@@ -15,8 +16,7 @@ namespace DapperDayProject.Repositories.Concrete
         }
         public async Task CreateCustomer(CreateCustomerDto createCustomerDto)
         {
-            string query = "insert into TblCustomer (CustomerName, CustomerSurname, CustomerBalance) " +
-                   "values (@customerName, @customerSurname, @customerBalance)";
+            string query = "insert into TblCustomer (CustomerName, CustomerSurname, CustomerBalance) values (@customerName, @customerSurname, @customerBalance)";
 
             var parameters = new DynamicParameters();
             parameters.Add("@customerName", createCustomerDto.CustomerName);
@@ -28,7 +28,7 @@ namespace DapperDayProject.Repositories.Concrete
 
         public async Task DeleteCustomer(int customerId)
         {
-            string query = "delete from TblCustomer where CustomerId = @customerId";
+            string query = "Delete From TblCustomer where CustomerId = @customerId";
             var parameters = new DynamicParameters();
             parameters.Add("@customerId", customerId);
             var connection = _context.CreateConnection();
@@ -45,14 +45,13 @@ namespace DapperDayProject.Repositories.Concrete
 
         public async Task<GetCustomerByIdDto> GetCustomerById(int id)
         {
-           string query = "Select * From TblCustomer where CustomerId = @customerId";
+            string query = "Select * From TblCustomer where CustomerId = @customerId";
             var parameters = new DynamicParameters();
             parameters.Add("@customerId", id);
             var connection = _context.CreateConnection();
-            var values = await connection.QueryFirstOrDefaultAsync<GetCustomerByIdDto>(query, parameters);
+            var values = await connection.QueryFirstAsync<GetCustomerByIdDto>(query);
             return values;
         }
-
         public async Task UpdateCustomer(UpdateCustomerDto updateCustomerDto)
         {
             string query = "Update TblCustomer Set CustomerName=@p1, CustomerSurname=@p2, CustomerBalance=@p3 where CustomerId=@p4";
@@ -65,7 +64,7 @@ namespace DapperDayProject.Repositories.Concrete
 
             var connection = _context.CreateConnection();
             await connection.ExecuteAsync(query, parameters);
-
         }
     }
+     
 }
