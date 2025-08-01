@@ -18,6 +18,12 @@ namespace DapperDayProject.Controllers
             return View(values);
 
         }
+        public async Task<IActionResult> OrderListWithCustomer() 
+        { 
+            var values = await _orderService.GetOrderWithCustomerasync();
+            return View(values);
+        }
+
         [HttpGet]
         public IActionResult CreateOrder()
         {
