@@ -6,8 +6,8 @@ namespace DapperDayProject.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly IcustomerService _customerService;
-        public CustomerController(IcustomerService customerService)
+        private readonly ICustomerService _customerService;
+        public CustomerController(ICustomerService customerService)
         {
             _customerService= customerService;
         }

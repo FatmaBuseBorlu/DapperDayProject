@@ -24,7 +24,7 @@ namespace DapperDayProject.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> CreareOrder(CreateOrderDto createOrderDto)
+        public async Task<IActionResult> CreateOrder(CreateOrderDto createOrderDto)
         {
             await _orderService.CreateOrderAsync(createOrderDto);
             return RedirectToAction("OrderList");
@@ -37,7 +37,15 @@ namespace DapperDayProject.Controllers
         [HttpGet]
         public async Task<IActionResult>UpdateOrder(int id)
         {
-            var value=await_orderService.getOrderAs
+           var value = await _orderService.GetOrderByIdAsync(id);
+            return View(value);
+        }
+        [HttpPost]
+
+        public async Task<IActionResult> UpdateOrder(UpdateOrderDto updateOrderDto)
+        {
+            await _orderService.UpdateOrderAsync(updateOrderDto);
+            return RedirectToAction("OrderList");
         }
     }
 }

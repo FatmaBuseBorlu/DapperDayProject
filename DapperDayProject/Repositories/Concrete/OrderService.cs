@@ -28,7 +28,7 @@ namespace DapperDayProject.Repositories.Concrete
 
         public async Task DeleteOrderAsync(int id)
         {
-            string query = "DELETE FROM TblOrder WHERE OrderId = @orderId";
+            string query = "Delete From TblOrder Where OrderId = @orderId";
 
             var parameters = new DynamicParameters();
             parameters.Add("@orderId", id);
@@ -49,7 +49,7 @@ namespace DapperDayProject.Repositories.Concrete
         {
             var query = "Select * From TblOrder Where OrderId=@orderId";
             var parameters= new DynamicParameters();
-            parameters.Add("@OrderId", id);
+            parameters.Add("@orderId", id);
             var connection= _context.CreateConnection();
             var values=await connection.QueryFirstAsync<GetOrderByIdDto>(query);
             return values;
@@ -57,19 +57,14 @@ namespace DapperDayProject.Repositories.Concrete
 
         public async Task UpdateOrderAsync(UpdateOrderDto updateOrderDto)
         {
-            string query = @"UPDATE TblOrder 
-                     SET ProductName = @p1,
-                         ProductPrice = @p2,
-                         ProductCount = @p3,
-                         CustomerId = @p4
-                     WHERE OrderId = @p5";
+            string query = "Update TblOrder Set ProductName=@p1, ProductPrice=@p2,ProductCount=@p3, CustomerId=@p4 Where OrderId=@p5";
 
             var parameters = new DynamicParameters();
-            parameters.Add("@ProductName", updateOrderDto.ProductName);
-            parameters.Add("@ProductPrice", updateOrderDto.ProductPrice);
-            parameters.Add("@ProductCount", updateOrderDto.ProductCount);
-            parameters.Add("@CustomerId", updateOrderDto.CustomerId);
-            parameters.Add("@OrderId", updateOrderDto.OrderId);
+            parameters.Add("@p1", updateOrderDto.ProductName);
+            parameters.Add("@p2", updateOrderDto.ProductPrice);
+            parameters.Add("@p3", updateOrderDto.ProductCount);
+            parameters.Add("@p4", updateOrderDto.CustomerId);
+            parameters.Add("@p5", updateOrderDto.OrderId);
 
             var conn = _context.CreateConnection();
             await conn.ExecuteAsync(query, parameters);

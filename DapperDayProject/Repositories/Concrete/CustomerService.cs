@@ -49,7 +49,7 @@ namespace DapperDayProject.Repositories.Concrete
             var parameters = new DynamicParameters();
             parameters.Add("@customerId", id);
             var connection = _context.CreateConnection();
-            var values = await connection.QueryFirstAsync<GetCustomerByIdDto>(query);
+            var values = await connection.QueryFirstAsync<GetCustomerByIdDto>(query,parameters);
             return values;
         }
         public async Task UpdateCustomer(UpdateCustomerDto updateCustomerDto)
